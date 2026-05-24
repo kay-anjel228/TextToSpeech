@@ -4,7 +4,97 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            @if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <div class="alert alert-warning">
+                    @Model.Message
+                </div>
+            }
+
+            @if (Model.IsAuthorized)
+            {
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <h2>Здравствуйте, @Model.CurrentUserName!</h2>
+
+                        <div class="d-flex justify-content-center gap-2 mt-3">
+                            <a asp-page="/Reader" class="btn btn-primary">Открыть читалку</a>
+
+                            <form method="post" asp-page-handler="LogOut">
+                                <button class="btn btn-danger">Выйти</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">TextToSpeech</h2>
+
+                        <ul class="nav nav-tabs mb-3">
+                            <li class="nav-item">
+                                <button class="nav-link active"
+                                data-bs-toogle="tab" data-bs-target="#login" type="button">
+                                Вход
+                                </button>
+                            </li>
+
+                            <li>
+                            <button class="nav-link active"
+                                    data-bs-toogle="tab" data-bs-target="#register" type="button">
+                                Регистрация
+                            </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>    
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="login">
+                        <form method="post" asp-page-handler="Login">
+                            <div class="mb-3">
+                                <label class="form-label">Логин</label>
+                                <input asp-for="LoginLogin" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Пароль</label>
+                                <input asp-for="LoginPassword" type="password" class="form-control" />
+                            </div>
+                            <button class="btn btn-primary w-100">Войти</button>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade show active" id="register">
+                        <form method="post" asp-page-handler="Register">
+                            <div class="mb-3">
+                                <label class="form-label">Имя</label>
+                                <input asp-for="RegisterName" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Логин</label>
+                                <input asp-for="RegisterLogin" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Пароль</label>
+                                <input asp-for="RegisterPassword" type="password" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Подтверждение пароля</label>
+                                <input asp-for="RegisterConfirmPassword" type="password" class="form-control" />
+                            </div>
+                            <button class="btn btn-success w-100">Зарегистрироваться</button>
+                        </form>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
 </div>

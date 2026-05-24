@@ -25,7 +25,7 @@ namespace TextToSpeech.Controllers.Api
             public ActionResult<List<SpeechLogDto>> GetAll()
             {
                 var logs = _speechLogService.GetAllLogs();
-                var res = logs.Select(log => ToDo(log).ToList);
+                var res = logs.Select(log => ToDto(log)).ToList();
                 return Ok(res);
             }
 
